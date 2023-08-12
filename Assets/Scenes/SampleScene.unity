@@ -617,7 +617,7 @@ GameObject:
   - component: {fileID: 690101935}
   - component: {fileID: 690101934}
   - component: {fileID: 690101933}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1099,9 +1099,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpHeight: 3
+  jumpHeight: 10
   dash: 5
   rotSpeed: 3
+  layer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!136 &1301019400
 CapsuleCollider:
   m_ObjectHideFlags: 0
