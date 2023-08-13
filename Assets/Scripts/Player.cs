@@ -32,6 +32,12 @@ public class Player : MonoBehaviour
             Vector3 jumpPower = Vector3.up * jumpHeight;
             rigidbody.AddForce(jumpPower, ForceMode.VelocityChange);
         }
+
+        if(Input.GetButtonDown("Dash"))
+        {
+            Vector3 dashPower = transform.forward * -Mathf.Log(1/rigidbody.drag) * dash;
+            rigidbody.AddForce(dashPower, ForceMode.VelocityChange);
+        }
     }
 
     private void FixedUpdate()
