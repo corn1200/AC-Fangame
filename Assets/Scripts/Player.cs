@@ -7,7 +7,8 @@ public class Player : MonoBehaviour
 {
     private Rigidbody rigidbody;
     public Vector3 dir = Vector3.zero;
-    public float rotSpeed = 3;
+    public float rotSpeed = 40;
+    public float moveSpeed = 4;
 
     void Start()
     {
@@ -29,5 +30,7 @@ public class Player : MonoBehaviour
         {
             transform.forward = Vector3.Lerp(transform.forward, dir, rotSpeed * Time.deltaTime);
         }
+        rigidbody.MovePosition(this.gameObject.transform.position + 
+            dir * moveSpeed * Time.deltaTime);
     }
 }
