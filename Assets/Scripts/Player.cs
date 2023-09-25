@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     private Rigidbody rigidbody;
     public Vector3 startDir;
     public Vector3 targetDir = Vector3.zero;
+    public Vector3 inputDir = Vector3.zero;
     public float rotTime = 0.1f;
     public float currentTime = 0;
     public float moveSpeed = 20;
@@ -21,17 +22,17 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        inputDir.x = Input.GetAxis("Horizontal");
+        inputDir.z = Input.GetAxis("Vertical");
+        inputDir.Normalize();
+
+        Debug.Log(inputDir.ToString());
         if (!isRotate)
         {
-            targetDir.x = Input.GetAxis("Horizontal");
-            targetDir.z = Input.GetAxis("Vertical");
-            targetDir.Normalize();
-
-            Debug.Log(targetDir.ToString());
-
-            if (targetDir != Vector3.zero)
+            if (inputDir != Vector3.zero)
             {
                 isRotate = true;
+                targetDir = inputDir;
             }
         }
 
@@ -60,7 +61,6 @@ public class Player : MonoBehaviour
                 currentTime = 0;
             }
         }
-        rigidbody.MovePosition(this.gameObject.transform.position +
-            targetDir * moveSpeed * Time.deltaTime);
+        transform.position += inputDir * moveSpeed * Time.deltaTime;
     }
 }
