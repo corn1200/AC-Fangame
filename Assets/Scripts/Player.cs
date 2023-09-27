@@ -44,23 +44,20 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        rigidbody.MovePosition(transform.position + (inputDir * moveSpeed * Time.deltaTime));
         if (isRotate)
         {
-            if (currentTime >= rotTime)
-            {
-                currentTime = rotTime;
-            }
+            currentTime = currentTime >= rotTime ? rotTime : currentTime;
 
             float t = currentTime / rotTime;
             transform.forward = Vector3.Slerp(startDir, targetDir, t);
 
-            if (currentTime >= rotTime)
+            if (currentTime == rotTime)
             {
                 isRotate = false;
                 startDir = transform.forward;
                 currentTime = 0;
             }
         }
-        transform.position += inputDir * moveSpeed * Time.deltaTime;
     }
 }
