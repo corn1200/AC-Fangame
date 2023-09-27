@@ -29,15 +29,12 @@ public class Player : MonoBehaviour
         Debug.Log(inputDir.ToString());
         if (!isRotate)
         {
-            if (inputDir != Vector3.zero)
+            if (inputDir != Vector3.zero && inputDir != transform.forward)
             {
                 isRotate = true;
                 targetDir = inputDir;
             }
-        }
-
-        if (isRotate)
-        {
+        } else {
             currentTime += Time.deltaTime;
         }
     }
