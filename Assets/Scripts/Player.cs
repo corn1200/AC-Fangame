@@ -24,9 +24,11 @@ public class Player : MonoBehaviour
     {
         inputDir.x = Input.GetAxis("Horizontal");
         inputDir.z = Input.GetAxis("Vertical");
-        inputDir.Normalize();
+        if(inputDir.magnitude > 1)
+        {
+            inputDir.Normalize();
+        }
 
-        Debug.Log(inputDir.ToString());
         if (!isRotate)
         {
             if (inputDir != Vector3.zero && inputDir != transform.forward)
