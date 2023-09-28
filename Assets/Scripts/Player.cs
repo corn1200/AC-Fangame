@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     public Vector3 targetDir = Vector3.zero;
     public Vector3 inputDir = Vector3.zero;
     public float rotTime = 0.1f;
-    public float currentTime = 0;
+    public float currentRotTime = 0;
     public float moveSpeed = 20;
     public bool isRotate = false;
 
@@ -22,41 +22,66 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        inputDir.x = Input.GetAxis("Horizontal");
-        inputDir.z = Input.GetAxis("Vertical");
-        if(inputDir.magnitude > 1)
-        {
-            inputDir.Normalize();
-        }
+        SetInputDir();
 
         if (!isRotate)
         {
-            if (inputDir != Vector3.zero && inputDir != transform.forward)
-            {
-                isRotate = true;
-                targetDir = inputDir;
-            }
+            SetRotationDir();
         } else {
-            currentTime += Time.deltaTime;
+            UpdateCurrRotTime();
         }
     }
 
     private void FixedUpdate()
     {
-        rigidbody.MovePosition(transform.position + (inputDir * moveSpeed * Time.deltaTime));
+        Move();
         if (isRotate)
         {
-            currentTime = currentTime >= rotTime ? rotTime : currentTime;
-
-            float t = currentTime / rotTime;
-            transform.forward = Vector3.Slerp(startDir, targetDir, t);
-
-            if (currentTime == rotTime)
-            {
-                isRotate = false;
-                startDir = transform.forward;
-                currentTime = 0;
-            }
+            Rotate();
         }
+    }
+
+    void Move()
+    {
+        rigidbody.MovePosition(transform.position + (inputDir * moveSpeed * Time.deltaTime));
+    }
+
+    void Rotate()
+    {
+        currentRotTime = currentRotTime >= rotTime ? rotTime : currentRotTime;
+
+        float t = currentRotTime / rotTime;
+        transform.forward = Vector3.Slerp(startDir, targetDir, t);
+
+        if (currentRotTime == rotTime)
+        {
+            isRotate = false;
+            startDir = transform.forward;
+            currentRotTime = 0;
+        }
+    }
+
+    void SetInputDir()
+    {
+        inputDir.x = Input.GetAxis("Horizontal");
+        inputDir.z = Input.GetAxis("Vertical");
+        if (inputDir.magnitude > 1)
+        {
+            inputDir.Normalize();
+        }
+    }
+
+    void SetRotationDir()
+    { 
+        if (inputDir != Vector3.zero && inputDir != transform.forward)
+        {
+            isRotate = true;
+            targetDir = inputDir;
+        }
+    }
+
+    void UpdateCurrRotTime()
+    {
+        currentRotTime += Time.deltaTime;
     }
 }
