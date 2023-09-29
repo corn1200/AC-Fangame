@@ -12,7 +12,9 @@ public class Player : MonoBehaviour
     public float rotTime = 0.1f;
     public float currentRotTime = 0;
     public float moveSpeed = 20;
+    public float boostSpeed = 40;
     public bool isRotate = false;
+    public bool isBoost = false;
 
     void Start()
     {
@@ -24,6 +26,11 @@ public class Player : MonoBehaviour
     {
         SetInputDir();
 
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            isBoost = true;
+        }
+
         if (!isRotate)
         {
             SetRotationDir();
@@ -34,6 +41,11 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (inputDir == Vector3.zero)
+        {
+            isBoost = false;
+        }
+
         Move();
         if (isRotate)
         {
@@ -43,7 +55,8 @@ public class Player : MonoBehaviour
 
     void Move()
     {
-        rigidbody.MovePosition(transform.position + (inputDir * moveSpeed * Time.deltaTime));
+        float speed = isBoost ? boostSpeed : moveSpeed;
+        rigidbody.MovePosition(transform.position + (inputDir * speed * Time.deltaTime));
     }
 
     void Rotate()
