@@ -6,6 +6,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Rigidbody rigidbody;
+    public GameObject BoostFire;
+    public GameObject BoostLight;
     public Vector3 startDir;
     public Vector3 targetDir = Vector3.zero;
     public Vector3 inputDir = Vector3.zero;
@@ -29,6 +31,8 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             isBoost = true;
+            BoostFire.SetActive(true);
+            BoostLight.SetActive(true);
         }
 
         if (!isRotate)
@@ -44,6 +48,8 @@ public class Player : MonoBehaviour
         if (inputDir == Vector3.zero)
         {
             isBoost = false;
+            BoostFire.SetActive(false);
+            BoostLight.SetActive(false);
         }
 
         Move();
