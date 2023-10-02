@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public float currentRotTime = 0;
     public float moveSpeed = 20;
     public float boostSpeed = 40;
+    public float quickBoostSpeed = 20;
     public bool isRotate = false;
     public bool isBoost = false;
 
@@ -33,6 +34,14 @@ public class Player : MonoBehaviour
             BoostOn();
         }
 
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            BoostOn();
+            Vector3 QuickBoostDir = transform.forward;
+            QuickBoostDir.y = 1;
+            QuickBoostDir.Normalize();
+            Debug.Log(QuickBoostDir);
+            rigidbody.AddForce(QuickBoostDir * quickBoostSpeed, ForceMode.Impulse);
         }
 
         if (!isRotate)

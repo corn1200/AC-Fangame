@@ -405,6 +405,7 @@ MonoBehaviour:
   currentRotTime: 0
   moveSpeed: 10
   boostSpeed: 20
+  quickBoostSpeed: 20
   isRotate: 0
   isBoost: 0
 --- !u!1 &410087039
