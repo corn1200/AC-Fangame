@@ -30,9 +30,9 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            isBoost = true;
-            BoostFire.SetActive(true);
-            BoostLight.SetActive(true);
+            BoostOn();
+        }
+
         }
 
         if (!isRotate)
@@ -47,9 +47,7 @@ public class Player : MonoBehaviour
     {
         if (inputDir == Vector3.zero)
         {
-            isBoost = false;
-            BoostFire.SetActive(false);
-            BoostLight.SetActive(false);
+            BoostOff();
         }
 
         Move();
@@ -102,5 +100,19 @@ public class Player : MonoBehaviour
     void UpdateCurrRotTime()
     {
         currentRotTime += Time.deltaTime;
+    }
+
+    void BoostOn()
+    {
+        isBoost = true;
+        BoostFire.SetActive(true);
+        BoostLight.SetActive(true);
+    }
+
+    void BoostOff()
+    {
+        isBoost = false;
+        BoostFire.SetActive(false);
+        BoostLight.SetActive(false);
     }
 }
