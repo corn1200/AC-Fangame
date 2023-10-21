@@ -391,7 +391,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 336901580}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7f455596e7ce2d43976eaa781404bcd, type: 3}
   m_Name: 
@@ -774,6 +774,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 336901584}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 33248e8b4064d804fbc1946821d2e7d4,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1359318382}
   m_SourcePrefab: {fileID: 100100000, guid: 33248e8b4064d804fbc1946821d2e7d4, type: 3}
 --- !u!4 &1359318381 stripped
 Transform:
@@ -781,6 +785,23 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1359318380}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1359318382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336901580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9a7ea8e8e7007244ba84fdb0c38df41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 336901582}
+  groundCheck: {fileID: 1359318381}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1001 &1589166670
 PrefabInstance:
   m_ObjectHideFlags: 0

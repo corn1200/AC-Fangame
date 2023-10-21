@@ -35,15 +35,10 @@ public class Player : MonoBehaviour
             BoostOn();
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            BoostOn();
-            Vector3 QuickBoostDir = transform.forward;
-            QuickBoostDir.y = 1;
-            QuickBoostDir.Normalize();
-            Debug.Log(QuickBoostDir);
-            rigidbody.AddForce(QuickBoostDir * quickBoostSpeed, ForceMode.Impulse);
-        }
+        //if (Input.GetKeyDown(KeyCode.LeftShift))
+        //{
+        //    BoostOn();
+        //}
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
