@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private Rigidbody rigidbody;
+    [SerializeField] private Rigidbody rigidbody;
     public GameObject BoostFire;
     public GameObject BoostLight;
     public Vector3 startDir;
@@ -20,6 +20,14 @@ public class Player : MonoBehaviour
     public bool isRotate = false;
     public bool isBoost = false;
 
+    #region dash
+    private bool canDash = true;
+    private bool isDashing;
+    public float dashingPower = 24f;
+    public float dashingTime = 0.2f;
+    public float dashingCooldown = 1f;
+    #endregion
+
     void Start()
     {
         rigidbody = this.GetComponent<Rigidbody>();
@@ -28,6 +36,11 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (isDashing)
+        {
+            return;
+        }
+
         SetInputDir();
 
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -35,10 +48,11 @@ public class Player : MonoBehaviour
             BoostOn();
         }
 
-        //if (Input.GetKeyDown(KeyCode.LeftShift))
-        //{
-        //    BoostOn();
-        //}
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        {
+            BoostOn();
+            StartCoroutine(Dash());
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -55,6 +69,11 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isDashing)
+        {
+            return;
+        }
+
         if (inputDir == Vector3.zero)
         {
             BoostOff();
@@ -124,5 +143,19 @@ public class Player : MonoBehaviour
         isBoost = false;
         BoostFire.SetActive(false);
         BoostLight.SetActive(false);
+    }
+
+    private IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+        rigidbody.useGravity = false;
+        rigidbody.velocity = transform.forward * dashingPower;
+        yield return new WaitForSeconds(dashingTime);
+        rigidbody.useGravity = true;
+        isDashing = false;
+        rigidbody.velocity = transform.forward;
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
     }
 }
