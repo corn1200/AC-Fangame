@@ -150,11 +150,12 @@ public class Player : MonoBehaviour
         canDash = false;
         isDashing = true;
         rigidbody.useGravity = false;
-        rigidbody.velocity = transform.forward * dashingPower;
+        rigidbody.velocity = Vector3.zero;
+        rigidbody.AddForce(transform.forward * dashingPower);
         yield return new WaitForSeconds(dashingTime);
         rigidbody.useGravity = true;
         isDashing = false;
-        rigidbody.velocity = transform.forward;
+        rigidbody.velocity = Vector3.zero;
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
     }
