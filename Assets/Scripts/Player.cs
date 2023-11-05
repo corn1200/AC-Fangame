@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Rigidbody rigidbody;
     public GameObject BoostFire;
     public GameObject BoostLight;
+    public ParticleSystem BoostParticleSystem;
     public Vector3 startDir;
     public Vector3 targetDir = Vector3.zero;
     public Vector3 inputDir = Vector3.zero;
@@ -32,6 +33,7 @@ public class Player : MonoBehaviour
     {
         rigidbody = this.GetComponent<Rigidbody>();
         startDir = this.transform.forward;
+        BoostParticleSystem = BoostFire.GetComponent<ParticleSystem>();
     }
 
     void Update()
@@ -152,10 +154,12 @@ public class Player : MonoBehaviour
         rigidbody.useGravity = false;
         rigidbody.velocity = Vector3.zero;
         rigidbody.AddForce(transform.forward * dashingPower);
+        BoostParticleSystem.emissionRate = 300;
         yield return new WaitForSeconds(dashingTime);
         rigidbody.useGravity = true;
         isDashing = false;
         rigidbody.velocity = Vector3.zero;
+        BoostParticleSystem.emissionRate = 12;
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
     }
