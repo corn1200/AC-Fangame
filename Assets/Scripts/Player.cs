@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerScript : MonoBehaviour
+public class Player : MonoBehaviour
 {
     private Rigidbody rigidbody;
 
@@ -12,6 +12,7 @@ public class PlayerScript : MonoBehaviour
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        Physics.IgnoreLayerCollision(3, 7);
     }
 
     void FixedUpdate()
@@ -20,6 +21,11 @@ public class PlayerScript : MonoBehaviour
         {
             rigidbody.AddForce(moveDirection.normalized * moveSpeed, ForceMode.Force);
         }
+    }
+
+    private void OnMouseDown()
+    {
+        rigidbody.AddForce(transform.forward * moveSpeed);
     }
 
     public void OnMove(InputAction.CallbackContext context)
