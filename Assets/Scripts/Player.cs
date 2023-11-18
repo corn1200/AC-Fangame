@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
-        Physics.IgnoreLayerCollision(3, 7);
     }
 
     void FixedUpdate()
