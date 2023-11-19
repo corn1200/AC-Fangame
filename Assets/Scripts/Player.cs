@@ -27,6 +27,30 @@ public class Player : MonoBehaviour
         rigidbody.AddForce(transform.forward * moveSpeed);
     }
 
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.layer == 8)
+        {
+            Debug.Log("collision enter");
+        }
+    }
+
+    private void OnCollisionStay(Collision other)
+    {
+        if (other.gameObject.layer == 8)
+        {
+            Debug.Log("collision stay");
+        }
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.layer == 8)
+        {
+            Debug.Log("collision exit");
+        }
+    }
+
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 input = context.ReadValue<Vector2>();
