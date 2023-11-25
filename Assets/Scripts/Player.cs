@@ -22,39 +22,31 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
-    {
-        rigidbody.AddForce(transform.forward * moveSpeed);
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.layer == 8)
-        {
-            Debug.Log("collision enter");
-        }
-    }
-
-    private void OnCollisionStay(Collision other)
-    {
-        if (other.gameObject.layer == 8)
-        {
-            Debug.Log("collision stay");
-        }
-    }
-
-    private void OnCollisionExit(Collision other)
-    {
-        if (other.gameObject.layer == 8)
-        {
-            Debug.Log("collision exit");
-        }
-    }
-
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 input = context.ReadValue<Vector2>();
         moveDirection = new Vector3(input.x, 0f, input.y);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        Debug.Log("Player: " + other.gameObject.name);
+    }
+
+    private void OnCollisionStay(Collision other)
+    {
+        if (other.gameObject.layer != 0)
+        {
+            Debug.Log("Player Stay: " + other.gameObject.name);
+        }
+    }
+    
+    private void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.layer != 0)
+        {
+            Debug.Log("Player Exit: " + other.gameObject.name);
+        }
     }
 
     public void OnBoost(InputAction.CallbackContext context)
