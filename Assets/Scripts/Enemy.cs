@@ -32,9 +32,4 @@ public class Enemy : MonoBehaviour
             Debug.Log("Enemy Exit: " + other.gameObject.name);
         }
     }
-
-    public void OnLeftWeapon(InputAction.CallbackContext context)
-    {
-        Rigidbody.AddForce(transform.forward * 100, ForceMode.Force);
-    }
 }
