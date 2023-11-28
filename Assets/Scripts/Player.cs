@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,13 +24,16 @@ public class Player : MonoBehaviour
     {
         if (moveDirection != Vector3.zero)
         {
-            rigidbody.AddForce(moveDirection.normalized * moveSpeed, ForceMode.Force);
+            var cameraRotation = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
+            var finalDirection = Quaternion.Euler(0, cameraRotation, 0) * moveDirection;
+            rigidbody.AddForce(finalDirection.normalized * moveSpeed, ForceMode.Force);
         }
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
         Vector2 input = context.ReadValue<Vector2>();
+
         moveDirection = new Vector3(input.x, 0f, input.y);
     }
 
