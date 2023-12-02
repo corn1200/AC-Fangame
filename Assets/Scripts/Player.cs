@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     private Vector3 moveDirection;
 
     public GameObject CinemachineCameraTarget;
+    public GameObject PlayerModel;
 
     public float moveSpeed = 100f;
     public float TopClamp = 70.0f;
@@ -24,8 +25,10 @@ public class Player : MonoBehaviour
     {
         if (moveDirection != Vector3.zero)
         {
-            var cameraRotation = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            var finalDirection = Quaternion.Euler(0, cameraRotation, 0) * moveDirection;
+            float cameraRotation = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
+            Quaternion eulerRotation = Quaternion.Euler(0, cameraRotation, 0);
+            Vector3 finalDirection =  eulerRotation * moveDirection;
+            PlayerModel.transform.rotation = eulerRotation;
             rigidbody.AddForce(finalDirection.normalized * moveSpeed, ForceMode.Force);
         }
     }
@@ -40,7 +43,6 @@ public class Player : MonoBehaviour
     public void OnLook(InputAction.CallbackContext context)
     {
         Vector2 lookDirection = context.ReadValue<Vector2>();
-
 
         if (lookDirection.sqrMagnitude >= 0.01f)
         {
