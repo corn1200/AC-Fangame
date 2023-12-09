@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Player : MonoBehaviour
 
     public GameObject CinemachineCameraTarget;
     public GameObject PlayerModel;
+    public Text CurrentSpeedText;
 
     public float moveSpeed = 100f;
     public float TopClamp = 70.0f;
@@ -24,6 +26,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        CurrentSpeedText.text = "current speed: " + rigidbody.velocity.magnitude; 
         if (moveDirection != Vector3.zero)
         {
             float cameraRotation = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
