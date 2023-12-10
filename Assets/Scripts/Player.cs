@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -26,15 +27,21 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        CurrentSpeedText.text = "current speed: " + rigidbody.velocity.magnitude; 
         if (moveDirection != Vector3.zero)
         {
             float cameraRotation = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
             Quaternion eulerRotation = Quaternion.Euler(0, cameraRotation, 0);
             Vector3 finalDirection =  eulerRotation * moveDirection;
             PlayerModel.transform.rotation = eulerRotation;
+            
             rigidbody.AddForce(finalDirection.normalized * moveSpeed, ForceMode.Force);
+            
+            if (rigidbody.velocity.magnitude > 4)
+            {
+                rigidbody.velocity = finalDirection.normalized * 4;
+            }
         }
+        CurrentSpeedText.text = "current speed: " + rigidbody.velocity.magnitude; 
     }
 
     public void OnMove(InputAction.CallbackContext context)
