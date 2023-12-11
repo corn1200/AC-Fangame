@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     public GameObject PlayerModel;
     public Text CurrentSpeedText;
 
+    public float rotationSmoothTime = 0.16f;
+    public float rotationVelocity;
     public float moveSpeed = 100f;
     public float TopClamp = 70.0f;
     public float BottomClamp = -30.0f;
@@ -31,17 +33,22 @@ public class Player : MonoBehaviour
         {
             float cameraRotation = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
             Quaternion eulerRotation = Quaternion.Euler(0, cameraRotation, 0);
-            Vector3 finalDirection =  eulerRotation * moveDirection;
-            PlayerModel.transform.rotation = eulerRotation;
-            
+            Vector3 finalDirection = eulerRotation * moveDirection;
+
             rigidbody.AddForce(finalDirection.normalized * moveSpeed, ForceMode.Force);
-            
+
             if (rigidbody.velocity.magnitude > 4)
             {
                 rigidbody.velocity = finalDirection.normalized * 4;
             }
+
+            float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, 
+                cameraRotation, ref rotationVelocity, rotationSmoothTime);
+
+            PlayerModel.transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
-        CurrentSpeedText.text = "current speed: " + rigidbody.velocity.magnitude; 
+
+        CurrentSpeedText.text = "current speed: " + rigidbody.velocity.magnitude;
     }
 
     public void OnMove(InputAction.CallbackContext context)
