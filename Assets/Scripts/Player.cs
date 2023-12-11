@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
 
     public float rotationSmoothTime = 0.16f;
     public float rotationVelocity;
+    public float targetRotation;
     public float moveSpeed = 100f;
     public float TopClamp = 70.0f;
     public float BottomClamp = -30.0f;
@@ -42,8 +43,11 @@ public class Player : MonoBehaviour
                 rigidbody.velocity = finalDirection.normalized * 4;
             }
 
-            float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, 
-                cameraRotation, ref rotationVelocity, rotationSmoothTime);
+            targetRotation = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg +
+                             cameraRotation;
+            
+            float rotation = Mathf.SmoothDampAngle(PlayerModel.transform.eulerAngles.y, 
+                targetRotation, ref rotationVelocity, rotationSmoothTime);
 
             PlayerModel.transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
