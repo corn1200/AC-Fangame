@@ -3,22 +3,32 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+// 플레이어 스크립트
 public class Player : MonoBehaviour
 {
+    // 플레이어 리지드바디
     private Rigidbody rigidbody;
+    // 이동 입력 방향
     private Vector3 moveDirection;
 
+    // 시네머신 타겟 오브젝트
     public GameObject CinemachineCameraTarget;
+    // 플레이어 모델 오브젝트
     public GameObject PlayerModel;
+    // 현재 스피드 텍스트
     public Text CurrentSpeedText;
 
+    // 플레이어 회전 소요 시간, 회전 속도, 목표 회전 각도
     public float rotationSmoothTime = 0.16f;
     public float rotationVelocity;
     public float targetRotation;
+    
+    // 가속도, 카메라 상하 시점 제한 각도
     public float moveSpeed = 100f;
     public float TopClamp = 70.0f;
     public float BottomClamp = -30.0f;
 
+    // 시네머신 타겟 오브젝트의 요 피치 각
     public float cinemachineTargetYaw;
     public float cinemachineTargetPitch;
 
