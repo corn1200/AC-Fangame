@@ -61,12 +61,15 @@ public class Player : MonoBehaviour
                 rigidbody.velocity = finalDirection.normalized * 4;
             }
 
+            // 목표 회전 각도 설정
             targetRotation = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg +
                              cameraRotation;
             
+            // 현재 회전 각도 설정
             float rotation = Mathf.SmoothDampAngle(PlayerModel.transform.eulerAngles.y, 
                 targetRotation, ref rotationVelocity, rotationSmoothTime);
 
+            // 플레이어 모델의 Y축 회전 설정
             PlayerModel.transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
 
