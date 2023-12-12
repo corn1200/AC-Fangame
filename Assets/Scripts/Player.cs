@@ -73,6 +73,7 @@ public class Player : MonoBehaviour
             PlayerModel.transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
 
+        // 현재 속도 표시
         CurrentSpeedText.text = "current speed: " + rigidbody.velocity.magnitude;
     }
 
