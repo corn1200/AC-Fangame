@@ -34,22 +34,30 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        // 리지드바디 컴포넌트 할당
         rigidbody = GetComponent<Rigidbody>();
+        // 스크린에 커서 고정 설정
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     void FixedUpdate()
     {
+        // 이동 입력 방향이 있을 경우 실행
         if (moveDirection != Vector3.zero)
         {
+            // 카메라의 Y축 회전 값 할당
             float cameraRotation = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
+            // 회전 * 입력 벡터로 최종 이동 방향 생성
             Quaternion eulerRotation = Quaternion.Euler(0, cameraRotation, 0);
             Vector3 finalDirection = eulerRotation * moveDirection;
 
+            // 플레이어 리지드바디를 이동 방향으로 가속
             rigidbody.AddForce(finalDirection.normalized * moveSpeed, ForceMode.Force);
 
+            // 플레이어 이동 속도가 4보다 클 경우 실행
             if (rigidbody.velocity.magnitude > 4)
             {
+                // 플레이어 속도를 최종 이동 방향의 4 크기로 고정
                 rigidbody.velocity = finalDirection.normalized * 4;
             }
 
