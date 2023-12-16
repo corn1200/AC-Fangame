@@ -87,19 +87,25 @@ public class Player : MonoBehaviour
         moveDirection = new Vector3(input.x, 0f, input.y);
     }
 
+    // 시점 전환 함수
     public void OnLook(InputAction.CallbackContext context)
     {
+        // 입력 받은 시점 벡터
         Vector2 lookDirection = context.ReadValue<Vector2>();
 
+        // 시점 벡터의 크기 제곱근이 0.01 이상일 경우 실행
         if (lookDirection.sqrMagnitude >= 0.01f)
         {
+            // 시네머신 목표 각도에 시점 벡터를 더함
             cinemachineTargetYaw += lookDirection.x;
             cinemachineTargetPitch += lookDirection.y;
         }
 
+        // 제한된 시점 각도를 계산
         cinemachineTargetYaw = ClampAngle(cinemachineTargetYaw, float.MinValue, float.MaxValue);
         cinemachineTargetPitch = ClampAngle(cinemachineTargetPitch, BottomClamp, TopClamp);
 
+        // 시네머신 카메라 타겟의 회전을 변경
         CinemachineCameraTarget.transform.rotation =
             Quaternion.Euler(cinemachineTargetPitch, cinemachineTargetYaw, 0.0f);
     }
@@ -205,6 +211,7 @@ public class Player : MonoBehaviour
         Debug.Log("OnChoiceRight : " + context.ReadValueAsButton());
     }
 
+    // 시점 제한 함수
     private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
     {
         if (lfAngle < -360f) lfAngle += 360f;
