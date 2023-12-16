@@ -77,10 +77,13 @@ public class Player : MonoBehaviour
         CurrentSpeedText.text = "current speed: " + rigidbody.velocity.magnitude;
     }
 
+    // 이동 입력 함수
     public void OnMove(InputAction.CallbackContext context)
     {
+        // 입력 받은 이동 벡터
         Vector2 input = context.ReadValue<Vector2>();
 
+        // 이동 벡터 저장
         moveDirection = new Vector3(input.x, 0f, input.y);
     }
 
