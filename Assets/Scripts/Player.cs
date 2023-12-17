@@ -42,37 +42,9 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        // 이동 입력 방향이 있을 경우 실행
-        if (moveDirection != Vector3.zero)
-        {
-            // 카메라의 Y축 회전 값 할당
-            float cameraRotation = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            // 회전 * 입력 벡터로 최종 이동 방향 생성
-            Quaternion eulerRotation = Quaternion.Euler(0, cameraRotation, 0);
-            Vector3 finalDirection = eulerRotation * moveDirection;
-
-            // 플레이어 리지드바디를 이동 방향으로 가속
-            rigidbody.AddForce(finalDirection.normalized * moveSpeed, ForceMode.Force);
-
-            // 플레이어 이동 속도가 4보다 클 경우 실행
-            if (rigidbody.velocity.magnitude > 4)
-            {
-                // 플레이어 속도를 최종 이동 방향의 4 크기로 고정
-                rigidbody.velocity = finalDirection.normalized * 4;
-            }
-
-            // 목표 회전 각도 설정
-            targetRotation = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg +
-                             cameraRotation;
-            
-            // 현재 회전 각도 설정
-            float rotation = Mathf.SmoothDampAngle(PlayerModel.transform.eulerAngles.y, 
-                targetRotation, ref rotationVelocity, rotationSmoothTime);
-
-            // 플레이어 모델의 Y축 회전 설정
-            PlayerModel.transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-        }
-
+        // 플레이어 이동 수행
+        Move();
+        
         // 현재 속도 표시
         CurrentSpeedText.text = "current speed: " + rigidbody.velocity.magnitude;
     }
@@ -217,5 +189,39 @@ public class Player : MonoBehaviour
         if (lfAngle < -360f) lfAngle += 360f;
         if (lfAngle > 360f) lfAngle -= 360f;
         return Mathf.Clamp(lfAngle, lfMin, lfMax);
+    }
+
+    private void Move()
+    {
+        // 이동 입력 방향이 있을 경우 실행
+        if (moveDirection != Vector3.zero)
+        {
+            // 카메라의 Y축 회전 값 할당
+            float cameraRotation = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
+            // 회전 * 입력 벡터로 최종 이동 방향 생성
+            Quaternion eulerRotation = Quaternion.Euler(0, cameraRotation, 0);
+            Vector3 finalDirection = eulerRotation * moveDirection;
+
+            // 플레이어 리지드바디를 이동 방향으로 가속
+            rigidbody.AddForce(finalDirection.normalized * moveSpeed, ForceMode.Force);
+
+            // 플레이어 이동 속도가 4보다 클 경우 실행
+            if (rigidbody.velocity.magnitude > 4)
+            {
+                // 플레이어 속도를 최종 이동 방향의 4 크기로 고정
+                rigidbody.velocity = finalDirection.normalized * 4;
+            }
+
+            // 목표 회전 각도 설정
+            targetRotation = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg +
+                             cameraRotation;
+            
+            // 현재 회전 각도 설정
+            float rotation = Mathf.SmoothDampAngle(PlayerModel.transform.eulerAngles.y, 
+                targetRotation, ref rotationVelocity, rotationSmoothTime);
+
+            // 플레이어 모델의 Y축 회전 설정
+            PlayerModel.transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+        }
     }
 }
