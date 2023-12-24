@@ -25,6 +25,9 @@ public class Player : MonoBehaviour
     
     // 가속도, 카메라 상하 시점 제한 각도
     public float moveSpeed = 100f;
+    public float currentMaxSpeed;
+    public float generalMaxSpeed = 4f;
+    public float boostMaxSpeed = 8f;
     public float TopClamp = 70.0f;
     public float BottomClamp = -30.0f;
 
@@ -106,6 +109,7 @@ public class Player : MonoBehaviour
     public void OnBoost(InputAction.CallbackContext context)
     {
         Debug.Log("OnBoost : " + context.ReadValueAsButton());
+        currentMaxSpeed = boostMaxSpeed;
     }
 
     public void OnQuickBoost(InputAction.CallbackContext context)
@@ -204,12 +208,12 @@ public class Player : MonoBehaviour
 
             // 플레이어 리지드바디를 이동 방향으로 가속
             rigidbody.AddForce(finalDirection.normalized * moveSpeed, ForceMode.Force);
-
+            
             // 플레이어 이동 속도가 4보다 클 경우 실행
-            if (rigidbody.velocity.magnitude > 4)
+            if (rigidbody.velocity.magnitude > currentMaxSpeed)
             {
                 // 플레이어 속도를 최종 이동 방향의 4 크기로 고정
-                rigidbody.velocity = finalDirection.normalized * 4;
+                rigidbody.velocity = finalDirection.normalized * currentMaxSpeed;
             }
 
             // 목표 회전 각도 설정
