@@ -8,21 +8,24 @@ public class Player : MonoBehaviour
 {
     // 플레이어 리지드바디
     private Rigidbody rigidbody;
+
     // 이동 입력 방향
     private Vector3 moveDirection;
 
     // 시네머신 타겟 오브젝트
     public GameObject CinemachineCameraTarget;
+
     // 플레이어 모델 오브젝트
     public GameObject PlayerModel;
+
     // 현재 스피드 텍스트
     public Text CurrentSpeedText;
 
     // 플레이어 회전 소요 시간, 회전 속도, 목표 회전 각도
-    public float rotationSmoothTime = 0.16f;
+    public float rotationSmoothTime = 0.01f;
     public float rotationVelocity;
     public float targetRotation;
-    
+
     // 가속도, 카메라 상하 시점 제한 각도
     public float moveSpeed = 100f;
     public float currentMaxSpeed;
@@ -41,13 +44,14 @@ public class Player : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         // 스크린에 커서 고정 설정
         Cursor.lockState = CursorLockMode.Locked;
+        currentMaxSpeed = generalMaxSpeed;
     }
 
     void FixedUpdate()
     {
         // 플레이어 이동 수행
         Move();
-        
+
         // 현재 속도 표시
         CurrentSpeedText.text = "current speed: " + rigidbody.velocity.magnitude;
     }
@@ -108,8 +112,13 @@ public class Player : MonoBehaviour
 
     public void OnBoost(InputAction.CallbackContext context)
     {
-        Debug.Log("OnBoost : " + context.ReadValueAsButton());
-        currentMaxSpeed = boostMaxSpeed;
+        bool isBoost = context.ReadValueAsButton();
+        Debug.Log("OnBoost : " + isBoost);
+
+        if (isBoost)
+        {
+            currentMaxSpeed = boostMaxSpeed;
+        }
     }
 
     public void OnQuickBoost(InputAction.CallbackContext context)
@@ -208,7 +217,7 @@ public class Player : MonoBehaviour
 
             // 플레이어 리지드바디를 이동 방향으로 가속
             rigidbody.AddForce(finalDirection.normalized * moveSpeed, ForceMode.Force);
-            
+
             // 플레이어 이동 속도가 4보다 클 경우 실행
             if (rigidbody.velocity.magnitude > currentMaxSpeed)
             {
@@ -219,13 +228,17 @@ public class Player : MonoBehaviour
             // 목표 회전 각도 설정
             targetRotation = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg +
                              cameraRotation;
-            
+
             // 현재 회전 각도 설정
-            float rotation = Mathf.SmoothDampAngle(PlayerModel.transform.eulerAngles.y, 
+            float rotation = Mathf.SmoothDampAngle(PlayerModel.transform.eulerAngles.y,
                 targetRotation, ref rotationVelocity, rotationSmoothTime);
 
             // 플레이어 모델의 Y축 회전 설정
             PlayerModel.transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+        }
+        else if (rigidbody.velocity.magnitude == 0)
+        {
+            currentMaxSpeed = generalMaxSpeed;
         }
     }
 }
