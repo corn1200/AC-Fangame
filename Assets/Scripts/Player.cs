@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     public Text CurrentSpeedText;
 
     // 플레이어 회전 소요 시간, 회전 속도, 목표 회전 각도
-    public float rotationSmoothTime = 0.01f;
+    public float rotationSmoothTime = 0.16f;
     public float rotationVelocity;
     public float targetRotation;
 
@@ -236,7 +236,7 @@ public class Player : MonoBehaviour
             // 플레이어 모델의 Y축 회전 설정
             PlayerModel.transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
-        else if (rigidbody.velocity.magnitude == 0)
+        else if (rigidbody.velocity.magnitude < 1f)
         {
             currentMaxSpeed = generalMaxSpeed;
         }

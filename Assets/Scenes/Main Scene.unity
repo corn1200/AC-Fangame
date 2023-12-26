@@ -1169,7 +1169,13 @@ MonoBehaviour:
   CinemachineCameraTarget: {fileID: 716565642}
   PlayerModel: {fileID: 5985184527021432266}
   CurrentSpeedText: {fileID: 1999309760}
+  rotationSmoothTime: 0.16
+  rotationVelocity: 0
+  targetRotation: 0
   moveSpeed: 100
+  currentMaxSpeed: 0
+  generalMaxSpeed: 4
+  boostMaxSpeed: 8
   TopClamp: 70
   BottomClamp: -30
   cinemachineTargetYaw: 0
