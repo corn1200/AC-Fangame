@@ -124,6 +124,20 @@ public class Player : MonoBehaviour
     public void OnQuickBoost(InputAction.CallbackContext context)
     {
         Debug.Log("OnQuickBoost : " + context.ReadValueAsButton());
+
+        if (moveDirection == Vector3.zero)
+        {
+            return;
+        }
+
+        // 카메라의 Y축 회전 값 할당
+        float cameraRotation = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
+        // 회전 * 입력 벡터로 최종 이동 방향 생성
+        Quaternion eulerRotation = Quaternion.Euler(0, cameraRotation, 0);
+        Vector3 finalDirection = eulerRotation * moveDirection;
+
+        // 플레이어 리지드바디를 이동 방향으로 가속
+        rigidbody.AddForce(finalDirection.normalized * 4000, ForceMode.Force);
     }
 
     public void OnJump(InputAction.CallbackContext context)
