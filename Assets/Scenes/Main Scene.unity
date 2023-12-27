@@ -1172,7 +1172,7 @@ MonoBehaviour:
   rotationSmoothTime: 0.16
   rotationVelocity: 0
   targetRotation: 0
-  moveSpeed: 100
+  moveSpeed: 25
   currentMaxSpeed: 0
   generalMaxSpeed: 4
   boostMaxSpeed: 8

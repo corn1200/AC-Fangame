@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     public float targetRotation;
 
     // 가속도, 카메라 상하 시점 제한 각도
-    public float moveSpeed = 100f;
+    public float moveSpeed = 25f;
     public float currentMaxSpeed;
     public float generalMaxSpeed = 4f;
     public float boostMaxSpeed = 8f;
@@ -216,14 +216,7 @@ public class Player : MonoBehaviour
             Vector3 finalDirection = eulerRotation * moveDirection;
 
             // 플레이어 리지드바디를 이동 방향으로 가속
-            rigidbody.AddForce(finalDirection.normalized * moveSpeed, ForceMode.Force);
-
-            // 플레이어 이동 속도가 4보다 클 경우 실행
-            if (rigidbody.velocity.magnitude > currentMaxSpeed)
-            {
-                // 플레이어 속도를 최종 이동 방향의 4 크기로 고정
-                rigidbody.velocity = finalDirection.normalized * currentMaxSpeed;
-            }
+            rigidbody.AddForce(finalDirection.normalized * (moveSpeed * currentMaxSpeed), ForceMode.Force);
 
             // 목표 회전 각도 설정
             targetRotation = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg +
@@ -236,7 +229,7 @@ public class Player : MonoBehaviour
             // 플레이어 모델의 Y축 회전 설정
             PlayerModel.transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
-        else if (rigidbody.velocity.magnitude < 1f)
+        else if (rigidbody.velocity.magnitude < generalMaxSpeed)
         {
             currentMaxSpeed = generalMaxSpeed;
         }
