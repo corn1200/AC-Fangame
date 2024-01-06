@@ -135,6 +135,9 @@ public class Player : MonoBehaviour
 
         // 플레이어 리지드바디를 이동 방향으로 가속
         rigidbody.AddForce(finalDirection.normalized * 4000, ForceMode.Force);
+
+        // 부스트 상태로 전환
+        currentMaxSpeed = boostMaxSpeed;
     }
 
     public void OnJump(InputAction.CallbackContext context)
