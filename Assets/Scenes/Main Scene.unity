@@ -1168,6 +1168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CinemachineCameraTarget: {fileID: 716565642}
   PlayerModel: {fileID: 5985184527021432266}
+  PlayerAnimator: {fileID: 5985184526371405423}
   CurrentSpeedText: {fileID: 1999309760}
   rotationSmoothTime: 0.16
   rotationVelocity: 0

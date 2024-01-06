@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -9,14 +10,16 @@ public class Player : MonoBehaviour
     // 플레이어 리지드바디
     private Rigidbody rigidbody;
 
-    // 이동 입력 방향
+    // 이동 입력 방향, 최종 이동 방향
     private Vector3 moveDirection;
+    private Vector3 finalDirection;
 
     // 시네머신 타겟 오브젝트
     public GameObject CinemachineCameraTarget;
 
     // 플레이어 모델 오브젝트
     public GameObject PlayerModel;
+    public Animator PlayerAnimator;
 
     // 현재 스피드 텍스트
     public Text CurrentSpeedText;
@@ -130,12 +133,6 @@ public class Player : MonoBehaviour
             return;
         }
 
-        // 카메라의 Y축 회전 값 할당
-        float cameraRotation = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-        // 회전 * 입력 벡터로 최종 이동 방향 생성
-        Quaternion eulerRotation = Quaternion.Euler(0, cameraRotation, 0);
-        Vector3 finalDirection = eulerRotation * moveDirection;
-
         // 플레이어 리지드바디를 이동 방향으로 가속
         rigidbody.AddForce(finalDirection.normalized * 4000, ForceMode.Force);
     }
@@ -227,7 +224,7 @@ public class Player : MonoBehaviour
             float cameraRotation = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
             // 회전 * 입력 벡터로 최종 이동 방향 생성
             Quaternion eulerRotation = Quaternion.Euler(0, cameraRotation, 0);
-            Vector3 finalDirection = eulerRotation * moveDirection;
+            finalDirection = eulerRotation * moveDirection;
 
             // 플레이어 리지드바디를 이동 방향으로 가속
             rigidbody.AddForce(finalDirection.normalized * (moveSpeed * currentMaxSpeed), ForceMode.Force);
@@ -247,5 +244,7 @@ public class Player : MonoBehaviour
         {
             currentMaxSpeed = generalMaxSpeed;
         }
+        
+        PlayerAnimator.SetBool("isMove", moveDirection != Vector3.zero);
     }
 }
