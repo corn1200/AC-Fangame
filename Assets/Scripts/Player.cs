@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     public float currentMaxSpeed;
     public float generalMaxSpeed = 4f;
     public float boostMaxSpeed = 8f;
-    public float TopClamp = 70.0f;
+    public float TopClamp = 30.0f;
     public float BottomClamp = -30.0f;
 
     // 시네머신 타겟 오브젝트의 요 피치 각
@@ -148,6 +148,8 @@ public class Player : MonoBehaviour
     public void OnAssaultBoost(InputAction.CallbackContext context)
     {
         Debug.Log("OnAssaultBoost : " + context.ReadValueAsButton());
+        
+        rigidbody.AddForce(CinemachineCameraTarget.transform.forward.normalized * 1000, ForceMode.Force);
     }
 
     public void OnTargetAssist(InputAction.CallbackContext context)

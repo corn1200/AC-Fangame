@@ -1177,7 +1177,7 @@ MonoBehaviour:
   currentMaxSpeed: 0
   generalMaxSpeed: 4
   boostMaxSpeed: 8
-  TopClamp: 70
+  TopClamp: 30
   BottomClamp: -30
   cinemachineTargetYaw: 0
   cinemachineTargetPitch: 0
