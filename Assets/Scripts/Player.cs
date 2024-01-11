@@ -143,6 +143,8 @@ public class Player : MonoBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         Debug.Log("OnJump : " + context.ReadValueAsButton());
+        
+        rigidbody.AddForce(Vector3.up * 1000, ForceMode.Force);
     }
 
     public void OnAssaultBoost(InputAction.CallbackContext context)
