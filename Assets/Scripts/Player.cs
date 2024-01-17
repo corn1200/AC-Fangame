@@ -162,7 +162,9 @@ public class Player : MonoBehaviour
 
     public void OnAssaultBoost(InputAction.CallbackContext context)
     {
+        Debug.Log("OnAssaultBoost : " + context.phase);
         
+        if (context.phase != InputActionPhase.Started)
         {
             return;   
         }
