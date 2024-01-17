@@ -124,10 +124,9 @@ public class Player : MonoBehaviour
 
     public void OnBoost(InputAction.CallbackContext context)
     {
-        bool isBoost = context.ReadValueAsButton();
-        Debug.Log("OnBoost : " + isBoost);
+        Debug.Log("OnBoost : " + context.phase);
 
-        if (isBoost)
+        if (context.phase == InputActionPhase.Started)
         {
             currentMaxSpeed = boostMaxSpeed;
         }
@@ -135,9 +134,9 @@ public class Player : MonoBehaviour
 
     public void OnQuickBoost(InputAction.CallbackContext context)
     {
-        Debug.Log("OnQuickBoost : " + context.ReadValueAsButton());
+        Debug.Log("OnQuickBoost : " + context.phase);
 
-        if (moveDirection == Vector3.zero || !context.ReadValueAsButton())
+        if (moveDirection == Vector3.zero || context.phase != InputActionPhase.Started)
         {
             return;
         }
@@ -151,9 +150,9 @@ public class Player : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        Debug.Log("OnJump : " + context.ReadValueAsButton());
+        Debug.Log("OnJump : " + context.phase);
 
-        if (!context.ReadValueAsButton())
+        if (context.phase != InputActionPhase.Started)
         {
             return;   
         }
@@ -163,9 +162,7 @@ public class Player : MonoBehaviour
 
     public void OnAssaultBoost(InputAction.CallbackContext context)
     {
-        Debug.Log("OnAssaultBoost : " + context.ReadValueAsButton());
         
-        if (!context.ReadValueAsButton())
         {
             return;   
         }
