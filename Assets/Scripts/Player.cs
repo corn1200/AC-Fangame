@@ -52,8 +52,6 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        // 플레이어 이동 수행
-        Move();
 
         // 현재 속도 표시
         CurrentSpeedText.text = "current speed: " + rigidbody.velocity.magnitude;
@@ -128,7 +126,7 @@ public class Player : MonoBehaviour
     {
         Debug.Log("OnQuickBoost : " + context.ReadValueAsButton());
 
-        if (moveDirection == Vector3.zero)
+        if (moveDirection == Vector3.zero || !context.ReadValueAsButton())
         {
             return;
         }
@@ -143,6 +141,11 @@ public class Player : MonoBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         Debug.Log("OnJump : " + context.ReadValueAsButton());
+
+        if (!context.ReadValueAsButton())
+        {
+            return;   
+        }
         
         rigidbody.AddForce(Vector3.up * 1000, ForceMode.Force);
     }
