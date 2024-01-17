@@ -41,6 +41,8 @@ public class Player : MonoBehaviour
     public float cinemachineTargetYaw;
     public float cinemachineTargetPitch;
 
+    public bool isAssaultBoost = false;
+
     void Start()
     {
         // 리지드바디 컴포넌트 할당
@@ -52,6 +54,15 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (isAssaultBoost)
+        {
+            rigidbody.AddForce(CinemachineCameraTarget.transform.forward.normalized * 1000, ForceMode.Force);
+        }
+        else
+        {
+            // 플레이어 이동 수행
+            Move();   
+        }
 
         // 현재 속도 표시
         CurrentSpeedText.text = "current speed: " + rigidbody.velocity.magnitude;
@@ -154,7 +165,12 @@ public class Player : MonoBehaviour
     {
         Debug.Log("OnAssaultBoost : " + context.ReadValueAsButton());
         
-        rigidbody.AddForce(CinemachineCameraTarget.transform.forward.normalized * 1000, ForceMode.Force);
+        if (!context.ReadValueAsButton())
+        {
+            return;   
+        }
+
+        isAssaultBoost = !isAssaultBoost;
     }
 
     public void OnTargetAssist(InputAction.CallbackContext context)
