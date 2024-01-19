@@ -56,12 +56,24 @@ public class Player : MonoBehaviour
     {
         if (isAssaultBoost)
         {
-            rigidbody.AddForce(CinemachineCameraTarget.transform.forward.normalized * 1000, ForceMode.Force);
+            Vector3 forwardVector = CinemachineCameraTarget.transform.forward.normalized;
+                
+            rigidbody.AddForce(forwardVector * 500, ForceMode.Force);
+        
+            // 목표 회전 각도 설정
+            targetRotation = Mathf.Atan2(forwardVector.x, forwardVector.z) * Mathf.Rad2Deg;
+
+            // 현재 회전 각도 설정
+            float rotation = Mathf.SmoothDampAngle(PlayerModel.transform.eulerAngles.y,
+                targetRotation, ref rotationVelocity, rotationSmoothTime);
+
+            // 플레이어 모델의 Y축 회전 설정
+            PlayerModel.transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
         else
         {
             // 플레이어 이동 수행
-            Move();   
+            Move();
         }
 
         // 현재 속도 표시
@@ -154,19 +166,19 @@ public class Player : MonoBehaviour
 
         if (context.phase != InputActionPhase.Started)
         {
-            return;   
+            return;
         }
-        
+
         rigidbody.AddForce(Vector3.up * 1000, ForceMode.Force);
     }
 
     public void OnAssaultBoost(InputAction.CallbackContext context)
     {
         Debug.Log("OnAssaultBoost : " + context.phase);
-        
+
         if (context.phase != InputActionPhase.Started)
         {
-            return;   
+            return;
         }
 
         isAssaultBoost = !isAssaultBoost;
@@ -269,7 +281,7 @@ public class Player : MonoBehaviour
         {
             currentMaxSpeed = generalMaxSpeed;
         }
-        
+
         PlayerAnimator.SetBool("isMove", moveDirection != Vector3.zero);
     }
 }
