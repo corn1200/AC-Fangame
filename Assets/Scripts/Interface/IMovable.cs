@@ -3,10 +3,10 @@
     public interface IMovable
     {
         public float BoostActive { get; set; }
-        public float OveredBoostActive { get; set; }
+        public float AssaultBoostActive { get; set; }
         public float GroundActive { get; set; }
         public void ToggleBoost();
-        public void ToggleOveredBoost();
+        public void ToggleAssaultBoost();
         public void QuickBoost();
         public void Move();
         public void Jump();

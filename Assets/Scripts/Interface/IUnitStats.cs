@@ -6,5 +6,6 @@
         public int Defense { get; set; }
         public int Speed { get; set; }
         public int Energy { get; set; }
+        public int Stagger { get; set; }
     }
 }
