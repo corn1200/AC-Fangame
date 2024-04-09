@@ -2,6 +2,6 @@
 {
     public interface ITargetable
     {
-        
+        public float TargetActive { get; set; }
     }
 }
