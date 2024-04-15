@@ -1,4 +1,4 @@
-﻿namespace PartsInterface
+﻿namespace FramePartsInterface
 {
     public interface IFrameCoreSpec
     {
