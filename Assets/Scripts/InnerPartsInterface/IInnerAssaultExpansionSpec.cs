@@ -1,6 +1,6 @@
 ﻿namespace InnerPartsInterface
 {
-    public interface IInnerAssaultArmorExpansion
+    public interface IInnerAssaultExpansionSpec
     {
         public float AttackPower { get; set; }
         public float ImpactPower { get; set; }
