@@ -14,6 +14,12 @@ public class Player : MonoBehaviour
     public float JumpForth = 100.0f;
     public float RotationSpeed = 20f; 
     public float YVelocity = 0.0f;
+    
+    private void Start()
+    {
+        // 게임 시작 시 커서 고정 및 숨기기
+        LockCursor();
+    }
 
     private void Update()
     {
@@ -54,5 +60,13 @@ public class Player : MonoBehaviour
         
         // 점프 방향으로 힘을 가함
         PlayerRigidBody.AddForce(jumpDir * JumpForth);
+    }
+    
+    void LockCursor()
+    {
+        // 커서를 화면 중앙에 고정
+        Cursor.lockState = CursorLockMode.Locked; 
+        // 커서를 숨김
+        Cursor.visible = false;
     }
 }
